@@ -35,7 +35,20 @@ void ATankPlayerController::AimTowardsCrosshair()
 	{
 		return;
 	}
-	// get world location linetrack through crosshair
-	// if it hits the landscape, aim at it
 
+	FVector hitLocation;	//out parameter
+
+	if (GetSightRayHitLocation(hitLocation))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("hit location: %s"), *hitLocation.ToString());
+		// if it hits the landscape, aim at it
+	}
+
+}
+
+// get world location linetrack through crosshair, return true if hits landscape
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
+{
+	OutHitLocation = FVector(1, 0, 0);
+	return true;
 }

@@ -27,4 +27,6 @@ public:
 private:
 	//移动炮管 瞄准准星
 	void AimTowardsCrosshair();
+
+	bool GetSightRayHitLocation(FVector&) const;
 };
