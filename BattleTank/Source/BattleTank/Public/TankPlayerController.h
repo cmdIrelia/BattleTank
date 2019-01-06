@@ -21,4 +21,10 @@ public:
 	ATank *GetControlledTank() const;
 	
 	virtual void BeginPlay() override;
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+private:
+	//移动炮管 瞄准准星
+	void AimTowardsCrosshair();
 };
