@@ -29,4 +29,11 @@ private:
 	void AimTowardsCrosshair();
 
 	bool GetSightRayHitLocation(FVector&) const;
+
+	//由UI中的白点相对位置决定
+	UPROPERTY(EditAnywhere)
+		float CorsshairXLocation = 0.5;
+	//由UI中的白点相对位置决定
+	UPROPERTY(EditAnywhere)
+		float CorsshairYLocation = 0.33333;
 };
