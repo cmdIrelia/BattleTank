@@ -30,6 +30,15 @@ private:
 
 	bool GetSightRayHitLocation(FVector&) const;
 
+	bool GetLookDirection(FVector2D screenLocation, FVector & lookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector lookDirection, FVector &hitDirection) const;
+
+
+	//炮击的范围
+	UPROPERTY(EditAnywhere)
+		float LineTrackRange = 1000000;
+
 	//由UI中的白点相对位置决定
 	UPROPERTY(EditAnywhere)
 		float CorsshairXLocation = 0.5;
