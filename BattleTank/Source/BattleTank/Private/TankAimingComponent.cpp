@@ -19,24 +19,6 @@ void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent *BarrelToSet)
 	this->Barrel = BarrelToSet;
 }
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
@@ -44,7 +26,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	FVector outLaunchVelocity;
 	FVector startLocation = Barrel->GetSocketLocation(FName("Projectile"));	
 
-	bool v_b = UGameplayStatics::SuggestProjectileVelocity(
+	bool bHaveAimingSolution = UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		outLaunchVelocity,
 		startLocation,
@@ -55,11 +37,24 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
-	if (v_b)
+	if (bHaveAimingSolution)
 	{
-		auto AimDirection = outLaunchVelocity.GetSafeNormal();	//归一化
-		auto name = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("%s startLoc=%s Speed=%s"), *name, *startLocation.ToString(), *AimDirection.ToString());
+		auto aimDirection = outLaunchVelocity.GetSafeNormal();	//归一化
+		//auto name = GetOwner()->GetName();
+		//UE_LOG(LogTemp, Warning, TEXT("%s startLoc=%s Speed=%s"), *name, *startLocation.ToString(), *AimDirection.ToString());
+		MoveBarrelTowards(aimDirection);
 	}
 }
 
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{
+	//计算瞄准点与炮管指向之间的角度差值
+	auto barrelRotation = Barrel->GetForwardVector().Rotation();//获得往前指向的轴，X轴
+	auto aimAsRotation = AimDirection.Rotation();
+	auto deltaRotator = aimAsRotation - barrelRotation;
+	UE_LOG(LogTemp, Warning, TEXT("Aim Rotator %s"), *deltaRotator.ToString());
+
+	//设定一个转动的最大值
+
+
+}
