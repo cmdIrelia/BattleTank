@@ -50,7 +50,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 	//		0,
 	//		10
 	//	);
-		UE_LOG(LogTemp, Warning, TEXT("look direction: %s"), *hitLocation.ToString());
+		
+		GetControlledTank()->AimAt(hitLocation);
 		// if it hits the landscape, aim at it
 	}
 
