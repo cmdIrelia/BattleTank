@@ -14,7 +14,7 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent *BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel *BarrelToSet)
 {
 	this->Barrel = BarrelToSet;
 }
@@ -52,9 +52,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto barrelRotation = Barrel->GetForwardVector().Rotation();//获得往前指向的轴，X轴
 	auto aimAsRotation = AimDirection.Rotation();
 	auto deltaRotator = aimAsRotation - barrelRotation;
-	UE_LOG(LogTemp, Warning, TEXT("Aim Rotator %s"), *deltaRotator.ToString());
 
 	//设定一个转动的最大值
-
+	Barrel->Elevate(5);
 
 }

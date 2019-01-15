@@ -4,7 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+
+#include "TankBarrel.h"
+
 #include "TankAimingComponent.generated.h"
+
+//Foward Declaration 前置声明
+class UTankBarrel;
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -18,13 +25,13 @@ public:
 
 	//删除了BeginPlay和TickComponent等函数。
 
-	void SetBarrelReference(UStaticMeshComponent *BarrelToSet);
+	void SetBarrelReference(UTankBarrel *BarrelToSet);
 
 public:	
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 private:
-	UStaticMeshComponent *Barrel = nullptr;
+	UTankBarrel *Barrel = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
 	
