@@ -4,9 +4,13 @@
 
 
 
-
+//归一化的相对速度，RelativeSpeed在-1到1之间。
 void UTankBarrel::Elevate(float RelativeSpeed)
 {
-	auto time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f: Barrel->Elevates at speed %f"), time, RelativeSpeed);
+	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, 1);
+	auto elevationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
+	auto NewElevation = this->RelativeRotation.Pitch + elevationChange;
+	NewElevation = FMath::Clamp<float>(NewElevation, this->MinElevationDegree, this->MaxElevationDegree);
+	SetRelativeRotation(FRotator(NewElevation, 0, 0));
+
 }

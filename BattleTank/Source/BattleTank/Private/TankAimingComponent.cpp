@@ -3,6 +3,8 @@
 #include "TankAimingComponent.h"
 #include <Kismet/GameplayStatics.h>
 
+#include <DrawDebugHelpers.h>
+
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
@@ -43,6 +45,24 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		//auto name = GetOwner()->GetName();
 		//UE_LOG(LogTemp, Warning, TEXT("%s startLoc=%s Speed=%s"), *name, *startLocation.ToString(), *AimDirection.ToString());
 		MoveBarrelTowards(aimDirection);  
+
+		//绘制弹着点
+		DrawDebugSphere(
+			GetWorld(),
+			HitLocation,
+			24,
+			32,
+			FColor(255, 0, 0)
+		);
+
+		//绘制炮管延伸线
+		FRotator rot(Barrel->GetForwardVector().Rotation());
+		DrawDebugLine(
+			GetWorld(),
+			startLocation,
+			startLocation + rot.RotateVector(FVector(500000, 0, 0)),
+			FColor(255, 0, 0)
+		);
 	}
 	else
 	{
@@ -58,7 +78,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto aimAsRotation = AimDirection.Rotation();
 	auto deltaRotator = aimAsRotation - barrelRotation;
 
-	//设定一个转动的最大值
-	Barrel->Elevate(5);
+	//Barrel->Elevate(1);
+	Barrel->Elevate(deltaRotator.Pitch);
 
 }
