@@ -59,6 +59,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
+
+private:
+	//Éä»÷¼ä¸ô
+	float ReloadTimeInSeconds = 3;
+
+	float LastFireTime = 0;
 	
 };

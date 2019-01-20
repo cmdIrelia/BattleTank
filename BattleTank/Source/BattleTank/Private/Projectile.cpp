@@ -10,8 +10,9 @@ AProjectile::AProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
-	ProjectileMovement->bAutoActivate = false;
-	//ProjectileMovement->Activate(false);
+	
+	// not activated until Fire() called
+	ProjectileMovement->bAutoActivate = false;	
 }
 
 // Called when the game starts or when spawned
@@ -33,5 +34,5 @@ void AProjectile::LaunchProjectile(float Speed)
 	auto time = GetWorld()->GetTimeSeconds();
 	UE_LOG(LogTemp, Warning, TEXT("%f: LaunchProjectile at %f !"), time, Speed);
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector*Speed);
-
+	ProjectileMovement->Activate();
 }
