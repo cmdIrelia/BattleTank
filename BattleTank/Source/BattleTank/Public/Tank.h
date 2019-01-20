@@ -15,14 +15,20 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-	void AimAt(FVector HitLocation);
-
-public:
 	// Sets default values for this pawn's properties
 	ATank();
 
 	UFUNCTION(BlueprintCallable, Category = SetupLaLa)
 	void SetBarrelReference(UTankBarrel *BarrelToSet);
+
+	
+	UFUNCTION(BlueprintCallable, Category = SetupLaLa)
+	void SetTurretReference(UTankTurret *TurretToSet);
+
+	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = Fire)
+	void Fire();
 
 protected:
 	// Called when the game starts or when spawned
